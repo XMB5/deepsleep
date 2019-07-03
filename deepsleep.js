@@ -7,7 +7,7 @@ const CronJob = require('cron').CronJob;
 
 const commonDeviceProperties = ['ip'];
 
-class DeepsleepRPI {
+class Deepsleep {
 
     constructor(config) {
         this.config = config;
@@ -104,13 +104,13 @@ class DeepsleepRPI {
     static async main() {
         log('start');
         const config = await this.loadConfig();
-        const deepsleepRpi = new DeepsleepRPI(config);
-        await deepsleepRpi.init();
+        const deepsleep = new Deepsleep(config);
+        await deepsleep.init();
     }
 
 }
 
-DeepsleepRPI.main().catch(e => {
+Deepsleep.main().catch(e => {
     console.error(e);
     process.exit(1);
 });

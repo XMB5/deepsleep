@@ -1,5 +1,5 @@
 {
-  "name": "deepsleep-rpi",
+  "name": "deepsleep",
   "version": "1.0.0",
   "dependencies": {
     "cron": "^1.7.1",
