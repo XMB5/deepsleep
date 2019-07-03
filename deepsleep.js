@@ -57,7 +57,7 @@ class Deepsleep {
                 const times = actionValRaw.constructor === Array ? actionValRaw : [actionValRaw];
                 for (let time of times) {
                     log('schedule', action, 'at', time);
-                    new CronJob(timez, () => {
+                    new CronJob(time, () => {
                         this[`${action}All`]().catch(err => {
                             console.error('error running action', action, 'at time', time, err);
                         });
