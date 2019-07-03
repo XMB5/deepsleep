@@ -1,0 +1,11 @@
+[Unit]
+Description=Shut down and turn on servers and smart plugs automatically
+Documentation=https://github.com/XMB5/deepsleep
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/node DEEPSLEEP_DIR/deepsleep.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
