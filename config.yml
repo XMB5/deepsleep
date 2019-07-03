@@ -1,36 +1,40 @@
-devices:
+devices: # 'devices' must be an array (notice the dashes),
+         # and must go in the order first to shut down at the top and last to shut down at the bottom
+         # when turning devices back on, deepsleep goes in the reverse direction
   - server1:
-      hashedKey: 'xxxxxxxxxxxxxxx'
       ip: '192.168.1.250'
       ssh:
+        hashedKey: '0123456789abcdef' # sha256 of the remote host's public key, in hex
 
   - router1:
-      hashedKey: 'yyyyyyyyyyyyyyy'
       ip: '192.168.1.1'
       ssh:
+        hashedKey: '0123456789abcdef'
 
   - switch1:
-      hashedKey: 'zzzzzzzzzzzzzzz'
       ip: '192.168.1.88'
       ssh:
         username: 'admin'
+        hashedKey: '0123456789abcdef'
 
   - smartplug1:
       ip: '10.26.0.101'
-      tasmota:
+      tasmota: # currently, there are no options for tasmota devices
 
   - smartplug2:
       ip: '10.26.0.102'
       tasmota:
 
-ssh:
+ssh: # can include any option from ssh2.Client.connect() - https://github.com/mscdex/ssh2/tree/v0.8.4#client-methods
   username: 'shutdownUser'
+  privateKey: '...'
 
 http:
+# disabled: true # enabling the http server could be a security issue
   port: 8080
 
 schedule:
-  stop:
-    - '5 1 * * *'
+  stop: # can be an array or a string
+    - '5 1 * * *' # cron pattern from node cron library - https://github.com/kelektiv/node-cron/tree/v1.7.0#cron-ranges
     - '6 5 * * *'
   start: '* 2 * * *'
