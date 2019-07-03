@@ -27,6 +27,12 @@ class SSHController extends Controller {
         log('doing nothing to start device', device.name);
     }
 
+    static get globalDefaults() {
+        return {
+            hostHash: 'sha256'
+        }
+    }
+
 }
 
 module.exports = SSHController;
