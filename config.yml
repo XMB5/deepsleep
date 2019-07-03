@@ -1,13 +1,16 @@
 devices:
   - server1:
+      hashedKey: 'xxxxxxxxxxxxxxx'
       ip: '192.168.1.250'
       ssh:
 
   - router1:
+      hashedKey: 'yyyyyyyyyyyyyyy'
       ip: '192.168.1.1'
       ssh:
 
   - switch1:
+      hashedKey: 'zzzzzzzzzzzzzzz'
       ip: '192.168.1.88'
       ssh:
         username: 'admin'
@@ -21,10 +24,13 @@ devices:
       tasmota:
 
 ssh:
-  username: 'andrew'
+  username: 'shutdownUser'
 
 http:
   port: 8080
 
 schedule:
-  stop: '5 1 * * *'
+  stop:
+    - '5 1 * * *'
+    - '6 5 * * *'
+  start: '* 2 * * *'

@@ -52,13 +52,17 @@ class DeepsleepRPI {
     initSchedule() {
         log('init schedule');
         for (let action of ['start', 'stop']) {
-            if (this.config.schedule[action]) {
-                log('schedule', action, 'at', this.config.schedule[action]);
-                new CronJob(this.config.schedule[action], () => {
-                    this[`${action}All`]().catch(err => {
-                        console.error('error running action', action, err);
-                    });
-                }, null, true);
+            const actionValRaw = this.config.schedule[action];
+            if (actionValRaw) {
+                const times = actionValRaw.constructor === Array ? actionValRaw : [actionValRaw];
+                for (let time of times) {
+                    log('schedule', action, 'at', time);
+                    new CronJob(timez, () => {
+                        this[`${action}All`]().catch(err => {
+                            console.error('error running action', action, 'at time', time, err);
+                        });
+                    }, null, true);
+                }
             }
         }
     }
