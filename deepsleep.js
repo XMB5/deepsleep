@@ -89,9 +89,9 @@ class Deepsleep {
     }
 
     static async loadConfig() {
-        const configLoc = process.argv[2];
+        const configLoc = process.argv[2] || '/etc/deepsleep.yml';
         if (!configLoc) {
-            throw new Error('blank config location');
+            throw new Error('empty config location');
         }
         log('read config file');
         const configStr = await fsPromises.readFile(process.argv[2], 'utf8');
