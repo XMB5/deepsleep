@@ -1,0 +1,10 @@
+{
+  "name": "deepsleep-rpi",
+  "version": "1.0.0",
+  "dependencies": {
+    "cron": "^1.7.1",
+    "js-yaml": "^3.13.1",
+    "phin": "^3.4.0",
+    "ssh2": "^0.8.4"
+  }
+}

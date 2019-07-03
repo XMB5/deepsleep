@@ -1,0 +1,1 @@
+module.exports = name => (...message) => console.log(`[${name}]`, ...message);

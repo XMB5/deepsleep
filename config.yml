@@ -1,0 +1,30 @@
+devices:
+  - server1:
+      ip: '192.168.1.250'
+      ssh:
+
+  - router1:
+      ip: '192.168.1.1'
+      ssh:
+
+  - switch1:
+      ip: '192.168.1.88'
+      ssh:
+        username: 'admin'
+
+  - smartplug1:
+      ip: '10.26.0.101'
+      tasmota:
+
+  - smartplug2:
+      ip: '10.26.0.102'
+      tasmota:
+
+ssh:
+  username: 'andrew'
+
+http:
+  port: 8080
+
+schedule:
+  stop: '5 1 * * *'
