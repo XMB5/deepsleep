@@ -28,7 +28,7 @@ class HttpServer extends EventEmitter {
                 this.innerServer.removeListener('error', errorListener);
                 resolve();
             });
-            this.innerServer.listen(this.opts.port, this.opts.host);
+            this.innerServer.listen(this.opts);
         });
     }
 

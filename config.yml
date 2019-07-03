@@ -29,12 +29,13 @@ ssh: # can include any option from ssh2.Client.connect() - https://github.com/ms
   username: 'shutdownUser'
   privateKey: '...'
 
-http:
-# disabled: true # enabling the http server could be a security issue
+http: # can include any option from net.Server.listen() - https://nodejs.org/api/net.html#net_server_listen_options_callback
   port: 8080
+  host: '10.26.0.1'
+  disabled: false # the http server could be a security issue
 
 schedule:
   stop: # can be an array or a string
-    - '5 1 * * *' # cron pattern from node cron library - https://github.com/kelektiv/node-cron/tree/v1.7.0#cron-ranges
+    - '5 1 * * *' # cron pattern from nodejs cron library - https://github.com/kelektiv/node-cron/tree/v1.7.0#cron-ranges
     - '6 5 * * *'
   start: '* 2 * * *'

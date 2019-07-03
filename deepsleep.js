@@ -43,10 +43,22 @@ class Deepsleep {
         if (!this.config.http || !this.config.http.disabled) {
             log('init http server');
             this.httpServer = new HttpServer(this.config.http);
+            this.httpServer.on('request', url => {
+                const urlNoSlash = url.substring(1);
+                if (['start', 'stop'].includes(urlNoSlash)) {
+                    this.doToAll(urlNoSlash);
+                }
+            });
             await this.httpServer.start();
         } else {
             log('http server disabled');
         }
+    }
+
+    doToAll(action) {
+        this[`${action}All`]().catch(err => {
+            console.error('error running action', action, err);
+        });
     }
 
     initSchedule() {
@@ -58,9 +70,7 @@ class Deepsleep {
                 for (let time of times) {
                     log('schedule', action, 'at', time);
                     new CronJob(time, () => {
-                        this[`${action}All`]().catch(err => {
-                            console.error('error running action', action, 'at time', time, err);
-                        });
+                        this.doToAll(action);
                     }, null, true);
                 }
             }
@@ -84,7 +94,7 @@ class Deepsleep {
         for (let i = this.devices.length - 1; i >= 0; i--) {
             const device = this.devices[i];
             log('start device', device.name, 'with controller', device.controllerName);
-            await this.controllers[device.controllerName][action](device);
+            await this.controllers[device.controllerName].start(device);
         }
     }
 
