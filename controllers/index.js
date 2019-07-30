@@ -1,6 +1,6 @@
 const map = {};
 
-for (let controllerName of ['ssh', 'tasmota']) {
+for (let controllerName of ['ssh', 'tasmota', 'delay']) {
     map[controllerName] = require(`./${controllerName}.js`);
 }
 

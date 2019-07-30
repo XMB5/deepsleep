@@ -80,11 +80,12 @@ class Deepsleep {
     async stopAll() {
         log('stop all');
         for (let device of this.devices) {
+            log('stop device', device.name, 'with controller', device.controllerName);
             try {
-                log('stop device', device.name, 'with controller', device.controllerName);
                 await this.controllers[device.controllerName].stop(device);
             } catch (e) {
-                console.error('error stopping device', device.name, e);
+                console.error(e);
+                break;
             }
         }
     }
@@ -94,7 +95,12 @@ class Deepsleep {
         for (let i = this.devices.length - 1; i >= 0; i--) {
             const device = this.devices[i];
             log('start device', device.name, 'with controller', device.controllerName);
-            await this.controllers[device.controllerName].start(device);
+            try {
+                await this.controllers[device.controllerName].start(device);
+            } catch (e) {
+                console.error(e);
+                break;
+            }
         }
     }
 

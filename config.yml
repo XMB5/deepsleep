@@ -4,18 +4,32 @@ devices: # 'devices' must be an array (notice the dashes),
   - server1:
       ip: '192.168.1.250'
       ssh:
-        hashedKey: '0123456789abcdef' # sha256 of the remote host's public key, in hex
+        hashedKey: 'Nc58Hh...' # sha256 of the remote host's public key, in base64
+                               # to extract from known_hosts, run ssh-keygen -lf ~/.ssh/known_hosts
+                               # if hashedKey doesn't exist, the remote host's key won't be checked
+                               # anyone could mitm the connection!
+        algorithms: # https://github.com/mscdex/ssh2-streams#ssh2stream-methods
+          serverHostKey:
+            - 'ssh-rsa' # deepsleep uses different default values for serverHostKey than ssh2-streams:
+                        # ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-rsa
+                        # this means deepsleep will try to connect with ecdsa first and rsa last
+                        # which is the same as 2019 OpenSSH_8.0p1 (checked with man ssh_config)
 
   - router1:
       ip: '192.168.1.1'
       ssh:
-        hashedKey: '0123456789abcdef'
+        hashedKey: '...'
 
   - switch1:
       ip: '192.168.1.88'
       ssh:
         username: 'admin'
-        hashedKey: '0123456789abcdef'
+        hashedKey: '...'
+
+  - delay1:
+      delay:
+        stop: 60000 # wait 1 minute (60000 milliseconds) after shutting down switch1 before moving on to smartplug1
+        start: 1000 # wait 1 second after smartplug1 turns on before moving up the list
 
   - smartplug1:
       ip: '10.26.0.101'
@@ -27,7 +41,8 @@ devices: # 'devices' must be an array (notice the dashes),
 
 ssh: # can include any option from ssh2.Client.connect() - https://github.com/mscdex/ssh2/tree/v0.8.4#client-methods
   username: 'shutdownUser'
-  privateKey: '...'
+#  privateKey: '...' # string containing private key
+  privateKeyFile: '/home/user/.ssh/id_rsa'
 
 http: # can include any option from net.Server.listen() - https://nodejs.org/api/net.html#net_server_listen_options_callback
   port: 8080
