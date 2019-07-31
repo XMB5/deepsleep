@@ -1,5 +1,5 @@
 [Unit]
-Description=Shut down and turn on servers and smart plugs automatically
+Description=deepsleep
 Documentation=https://github.com/XMB5/deepsleep
 After=network-online.target
 
