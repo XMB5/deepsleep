@@ -110,7 +110,7 @@ class Deepsleep {
             throw new Error('empty config location');
         }
         log('read config file');
-        const configStr = await fsPromises.readFile(process.argv[2], 'utf8');
+        const configStr = await fsPromises.readFile(configLoc, 'utf8');
         log('parse config file');
         const config = yaml.safeLoad(configStr);
         log('config', JSON.stringify(config));
