@@ -29,7 +29,14 @@ class SSHController extends Controller {
         });
 
         return new Promise((res, rej) => {
-            conn.on('error', rej);
+            conn.on('error', e => {
+                if (e.code === 'EHOSTUNREACH') {
+                    log('assuming host is already down because we received EHOSTUNREACH');
+                    res();
+                } else {
+                    rej(e);
+                }
+            });
             conn.on('end', () => {
                 log('connection closed');
                 res();
